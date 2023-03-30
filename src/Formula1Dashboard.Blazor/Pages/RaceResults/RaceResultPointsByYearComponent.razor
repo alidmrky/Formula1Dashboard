@@ -1,0 +1,13 @@
+﻿@using Volo.Abp.MultiTenancy
+@inherits Formula1DashboardComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<Card>
+	<CardHeader>
+		<h2 class="card-title">Race Points</h2>
+		<small class="d-block text-muted text-truncate">Race Points by Years</small>
+	</CardHeader>
+	<CardBody>
+		<LineChart @ref="lineChart" TItem="decimal"/>
+	</CardBody>
+</Card>

@@ -1,0 +1,22 @@
+﻿@page "/dashboard"
+@page "/dashboard/{selectedDriver:int}"
+
+@using Volo.Abp.MultiTenancy
+@inherits Formula1DashboardComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="row">
+	<DriverComponent></DriverComponent>
+</div>
+<div class="row">
+	<div class="col-6">
+		<RaceResultByDriverIdComponent DriverId="SelectedDriver"></RaceResultByDriverIdComponent>
+	</div>
+	<div class="col-6">
+		<RaceResultPointsByYearComponent DriverId="SelectedDriver"></RaceResultPointsByYearComponent>
+	</div>
+</div>
+
+@code {
+	[Parameter] public int SelectedDriver { get; set; } = 1;
+}

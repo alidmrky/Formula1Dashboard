@@ -1,0 +1,77 @@
+﻿@using Volo.Abp.MultiTenancy
+@inherits Formula1DashboardComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<Card>
+	<CardHeader>
+		<h2 class="card-title">Race Results</h2>
+		<small class="d-block text-muted text-truncate">Race Results by Years</small>
+	</CardHeader>
+	<CardBody>
+		<div style="height: 500px; overflow: auto;">
+			<Tabs SelectedTab="@SelectedTab">
+				<Items>
+					@foreach (var item in TabYears.Order())
+					{
+						<Tab Name="@item">@item</Tab>
+					}
+				</Items>
+				<Content>
+					@foreach (var item in RaceResultDtos)
+					{
+						<TabPanel Name="@item.Year">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>GrandPrixName</th>
+										<th>Position</th>
+										<th>RaceDate</th>
+										<th>FastestLapTime</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var detail in item.Detail.OrderBy(x => x.RaceDate))
+									{
+										<tr>
+											<td>
+												<div style="width:100px; height:75px;">
+													<img src="@detail.CircuitPictureUrl">
+												</div>
+											</td>
+											<td>
+												@detail.GrandPrixName
+											</td>
+											<td>
+												@{
+													if (@detail.Position == "1")
+													{
+														<Badge Color="Color.Success">@detail.Position</Badge>
+													}
+													else if (@detail.Position == "2")
+													{
+														<Badge Color="Color.Warning">@detail.Position</Badge>
+													}
+													else if (@detail.Position == "3")
+													{
+														<Badge Color="Color.Primary">@detail.Position</Badge>
+													}
+													else
+													{
+														<Badge Color="Color.Dark">@detail.Position</Badge>
+													}
+												}
+											</td>
+											<td>@detail.RaceDate.Value.ToString("dd/MM/yyyy")</td>
+											<td>@detail.FastestLapTime</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</TabPanel>
+					}
+				</Content>
+			</Tabs>
+		</div>
+	</CardBody>
+</Card>
